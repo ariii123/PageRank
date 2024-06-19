@@ -46,7 +46,7 @@ def handle_sinks(pagerank_values, sinks, tot_nodes):
     """Distribute sink ranks evenly across all nodes."""
     sink_rank_sum = 0
 
-    # Sum the ranks of all sink nodes
+    # Sum the ranks of all sink nodes and change sink pages ranks
     for node_id in sinks:
         pagerank_values[node_id] /= tot_nodes
         sink_rank_sum += pagerank_values[node_id] 
@@ -54,12 +54,13 @@ def handle_sinks(pagerank_values, sinks, tot_nodes):
     return sink_rank_sum
 
 
-def pagerank(digraph, num_iterations=100, tol = 1e-5, damping_factor=.85):
+def pagerank(digraph, num_iterations=100, tol = 1e-6, damping_factor=.85):
     """Calculate the PageRank for the nodes in the given digraph.
 
     In num_iterations iterations, calculates the PageRank for all
-    nodes in the given digraph. Returns a dictionary mapping node IDs to 
-    their PageRank. Each node starts with an initial PageRank value of 
+    nodes in the given digraph accepting a certain tollerance (tol). 
+    Returns a dictionary mapping node IDs to their PageRank. 
+    Each node starts with an initial PageRank value of 
     1/N, where N is the number of nodes in the graph.
 
     >>> g = graph.DirectedGraph()
@@ -158,19 +159,6 @@ def usage():
           '[<num_iterations>]')
     sys.exit(1)
 
-
-def main1(*args):
-    """Command-line interface for this module."""
-    num_iterations = 40
-    g = graph.DirectedGraph()
-    g.add_node(0, airport_name='DTW')
-    g.add_node(1, airport_name='AMS', country='The Netherlands')
-    g.add_node(2, airport_name='ORD', city='Chicago')
-    g.add_edge(0, 1, flight_time_in_hours=8)
-    g.add_edge(0, 2, flight_time_in_hours=1)
-    g.add_edge(1, 0, airline_name='KLM')
-
-    pagerank(g)
 
 def main(*args):
     if len(args) < 2:

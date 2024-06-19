@@ -11,7 +11,7 @@ import doctest
 
 
 class GraphError(Exception):
-    """This class is used for raising exceptions in the graph ADTs.
+    """This class is used for raising exceptions in the graph.
 
     >>> e = GraphError()
     >>> str(e)
